@@ -1,5 +1,55 @@
 class sample{
     /***************PROBLEM-1*****************/
+    //TC:0(5 ^ L)
+        //SC:0(5^L)
+    class Solution {
+        int count;
+        HashMap<Integer,Integer> map;
+        public int confusingNumberII(int n) {
+            if(n<=1){
+                return n;
+            }
+
+            map=new HashMap<>();
+            map.put(0,0);
+            map.put(1,1);
+            map.put(6,9);
+            map.put(8,8);
+            map.put(9,6);
+
+            dfs(0,n);
+            return count;
+        }
+
+        private void dfs(long curr,int n){
+            //base
+            if(curr>n){
+                return;
+            }
+
+            //logic
+            if(isConfusing(curr)){
+                count++;
+            }
+            for(long key:map.keySet()){
+                long newNumber=curr*10+key;
+                if(newNumber!=0){
+                    dfs(newNumber,n);
+                }
+            }
+        }
+
+        private boolean isConfusing(long num){
+            long rotation=0;
+            long temp=num;
+            while(temp>0){
+                int rem=(int)temp%10;
+                rotation=rotation*10+map.get(rem);
+                temp=temp/10;
+            }
+            return num!=rotation;
+        }
+    }
     /***************PROBLEM-2*****************/
 
     //TC:0(2*N)
